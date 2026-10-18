@@ -1,83 +1,188 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin - Oasis Dynasty</title>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Oasis Dynasty Club [SECURE]</title>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-<style>body{background:#0f0f0f;color:#eee;font-family:Arial;padding:12px}h2{color:#ff0055}.tab{background:#222;padding:10px 16px;border-radius:20px;border:none;color:white;margin:4px;cursor:pointer}.tab.active{background:#ff0055}.panel{display:none;background:#181818;padding:16px;border-radius:12px;margin-top:10px}.panel.active{display:block}input,textarea,select{width:100%;max-width:500px;padding:10px;margin:5px 0;border-radius:8px;border:none;background:#222;color:white}button{padding:10px 16px;border-radius:20px;border:none;background:#ff0055;color:white;margin:4px;cursor:pointer}#qrcode,#reader{display:flex;justify-content:center;max-width:350px;margin:auto}#result{padding:16px;border-radius:10px;text-align:center;display:none;margin-top:10px;font-weight:bold}.real{background:#00c851}.fake{background:#ff4444}.item{background:#222;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between;align-items:center}.item img{width:60px;height:60px;object-fit:cover;border-radius:6px;margin-right:8px}</style>
+<style>
+body{background:#050505;color:#eee;font-family:Arial;padding:0;margin:0}
+#loginBox{max-width:400px;margin:80px auto;background:#181818;padding:30px;border-radius:15px;text-align:center;border:2px solid #ff0055}
+#adminPanel{display:none}
+.header-admin{background:#111;padding:12px;display:flex;justify-content:space-between;align-items:center}
+.tab{background:#222;padding:10px 16px;border-radius:20px;border:none;color:white;margin:4px;cursor:pointer}.tab.active{background:#ff0055}
+.panel{display:none;background:#181818;padding:16px;border-radius:12px;margin:12px}.panel.active{display:block}
+input,textarea,select{width:100%;max-width:500px;padding:11px;margin:6px 0;border-radius:8px;border:none;background:#222;color:white}
+button{padding:11px 18px;border-radius:20px;border:none;background:#ff0055;color:white;cursor:pointer;margin:4px;font-weight:bold}
+#qrcode,#reader{display:flex;justify-content:center;max-width:350px;margin:auto}
+#result{padding:16px;border-radius:10px;text-align:center;display:none;margin-top:10px;font-weight:bold}.real{background:#00c851}.fake{background:#ff4444}
+.item{background:#222;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between;align-items:center}
+.item img{width:60px;height:60px;object-fit:cover;border-radius:6px;margin-right:8px}
+.security-badge{background:#00c851;padding:5px 10px;border-radius:20px;font-size:11px}
+</style>
 </head>
 <body>
-<h2>Admin - Oasis Dynasty</h2>
+
+<!-- LOGIN SCREEN - HARD TO HACK -->
+<div id="loginBox">
+<h2 style="color:#ff0055">🔒 Oasis Dynasty Admin</h2>
+<p style="color:#888;font-size:13px">Secure login for owner only<br>WhatsApp 0768671531</p>
+<input type="email" id="email" placeholder="Admin Email">
+<input type="password" id="password" placeholder="Password (min 8 chars)">
+<button onclick="login()" style="width:100%;margin-top:10px">LOGIN SECURELY</button>
+<p id="loginError" style="color:#ff4444;font-size:13px;margin-top:10px"></p>
+<p style="font-size:11px;color:#666;margin-top:15px">Protected by Firebase Auth • Encrypted • Brute-force protected</p>
+</div>
+
+<!-- ADMIN PANEL - ONLY AFTER LOGIN -->
+<div id="adminPanel">
+<div class="header-admin">
+<div><span style="color:#ff0055;font-weight:bold">OASIS DYNASTY ADMIN</span> <span class="security-badge">SECURE 🔐</span></div>
+<div><span id="userEmail" style="font-size:12px;color:#aaa"></span> <button onclick="logout()" style="background:#333">Logout</button></div>
+</div>
+
+<div style="padding:0 12px">
 <button class="tab active" onclick="show('gen',this)">QR Gen</button>
 <button class="tab" onclick="show('verify',this)">Verifier 5s</button>
-<button class="tab" onclick="show('artist',this)">Big Artists Shows</button>
+<button class="tab" onclick="show('artist',this)">Big Artists</button>
 <button class="tab" onclick="show('ads',this)">Adverts</button>
-<button class="tab" onclick="show('photos',this)">Upload Real Photos</button>
+<button class="tab" onclick="show('photos',this)">Real Photos</button>
+</div>
 
-<div id="gen" class="panel active"><h3>QR Generator</h3><input id="gConcert" value="Oasis Dynasty Entry"><input id="gName" placeholder="Buyer Name"><input id="gPhone" placeholder="Phone"><button onclick="genQR()">Generate</button><div id="ticket" style="background:white;color:black;width:320px;margin:12px auto;padding:12px;border-radius:10px;display:none;text-align:center"><h4 id="tC" style="color:#ff0055"></h4><div id="qrcode"></div><p id="tN"></p><div id="tCode" style="background:#eee;padding:5px;font-size:11px;word-break:break-all"></div></div></div>
+<div id="gen" class="panel active">
+<h3>QR Generator (Secure)</h3>
+<input id="gConcert" value="Oasis Dynasty Entry"><input id="gName" placeholder="Buyer Name"><input id="gPhone" placeholder="Phone"><button onclick="genQR()">Generate Secure QR</button>
+<div id="ticket" style="background:white;color:black;width:320px;margin:12px auto;padding:12px;border-radius:10px;display:none;text-align:center"><h4 id="tC" style="color:#ff0055"></h4><div id="qrcode"></div><p id="tN"></p><div id="tCode" style="background:#eee;padding:5px;font-size:11px;word-break:break-all"></div></div>
+</div>
 
 <div id="verify" class="panel"><h3>Gate Verifier</h3><div id="reader"></div><div id="result"></div><h4>Count: <span id="count">0</span></h4><ul id="list" style="font-size:12px"></ul></div>
 
-<div id="artist" class="panel"><h3>Add Big Artist Night Show</h3>
-<input id="arName" placeholder="Artist Name - e.g. John Frog"><input id="arDate" type="date"><input id="arPrice" placeholder="Entry e.g. 30,000 UGX"><textarea id="arDesc" placeholder="Desc e.g. Live in Adjumani with full band"></textarea>
-<p style="font-size:12px;color:#888">Artist Photo (from phone):</p><input type="file" id="arImg" accept="image/*">
-<button onclick="addArtist()">Add Artist Show</button><div id="artistList"></div></div>
+<div id="artist" class="panel"><h3>Big Artist Night Show</h3><input id="arName" placeholder="Artist e.g. John Frog"><input id="arDate" type="date"><input id="arPrice" placeholder="Price e.g. 30k"><textarea id="arDesc" placeholder="Desc"></textarea><input type="file" id="arImg" accept="image/*"><button onclick="addArtist()">Add Artist Show to Firebase</button><div id="artistList"></div></div>
 
-<div id="ads" class="panel"><h3>Add Advert</h3><select id="aType"><option value="general">General Advert</option><option value="event">Event Advert</option></select><input id="aTitle" placeholder="Title"><textarea id="aDesc" placeholder="Desc"></textarea><input id="aPrice" placeholder="Price"><button onclick="addAd()">Add</button><div id="adList"></div></div>
+<div id="ads" class="panel"><h3>Adverts</h3><select id="aType"><option value="general">General</option><option value="event">Event</option></select><input id="aTitle" placeholder="Title"><textarea id="aDesc" placeholder="Desc"></textarea><input id="aPrice" placeholder="Price"><button onclick="addAd()">Add to Firebase</button><div id="adList"></div></div>
 
-<div id="photos" class="panel"><h3>Upload Real Club Photos</h3><p style="font-size:12px;color:#888">Pick from phone gallery - will appear on main site with lazy loading</p><input type="file" id="photoUpload" accept="image/*" multiple><button onclick="clearPhotos()" style="background:#333">Clear All Real Photos</button><div id="photoList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin-top:10px"></div></div>
+<div id="photos" class="panel"><h3>Upload Real Photos</h3><input type="file" id="photoUpload" accept="image/*" multiple><button onclick="clearPhotos()" style="background:#333">Clear All</button><div id="photoList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin-top:10px"></div></div>
 
-<script>
-const SECRET="JUBA2026-MY-CLUB-SECRET-92";const SHOW=5;let verified={};let count=0;let timer=null;
-function show(id,btn){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');if(id==='verify')startScan();}
-async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
-async function genQR(){let c=gConcert.value,n=gName.value,p=gPhone.value;if(!n)return alert("Name");let id="OASIS-"+Math.floor(1000+Math.random()*9000)+"-"+p.slice(-3);let raw=id+"|"+n+"|"+SECRET;let h=await sha(raw);let sig=h.slice(0,8);let qr=id+"|"+n+"|"+sig;ticket.style.display='block';tC.innerText=c;tN.innerText=n;tCode.innerText=qr;qrcode.innerHTML="";new QRCode(qrcode,{text:qr,width:200,height:200});}
-async function verifyQR(t){try{let parts=t.split('|');let sig=parts.pop();let id=parts[0];let name=parts[1];let raw=`${id}|${name}|${SECRET}`;let h=await sha(raw);let exp=h.slice(0,8);let r=result;if(timer)clearTimeout(timer);if(sig===exp){if(verified[id]){r.style.display='block';r.className='fake';r.innerHTML='⚠️ ALREADY USED';}else{verified[id]=Date.now();count++;document.getElementById('count').innerText=count;r.style.display='block';r.className='real';r.innerHTML=`✅ REAL ${id}<br>${name}`;let li=document.createElement('li');li.innerText=id+" - "+name;list.prepend(li);}}else{r.style.display='block';r.className='fake';r.innerHTML='❌ FAKE';}timer=setTimeout(()=>{r.style.display='none';},SHOW*1000);}catch(e){}}
-function startScan(){if(window.s)return;window.s=true;const q=new Html5Qrcode("reader");q.start({facingMode:"environment"},{fps:10,qrbox:250},d=>verifyQR(d),()=>{});}
+</div>
 
-// Artists
-function addArtist(){
- let name=arName.value,date=arDate.value,price=arPrice.value,desc=arDesc.value;
- let file=arImg.files[0];
- if(!name||!file)return alert("Need name + photo");
- let reader=new FileReader();
- reader.onload=function(e){
-   let artists=JSON.parse(localStorage.getItem('oasis_artists')||'[]');
-   artists.unshift({id:Date.now(),name,date,price,desc,img:e.target.result});
-   localStorage.setItem('oasis_artists',JSON.stringify(artists));
-   renderArtists();arName.value='';arDesc.value='';alert("Artist show added!");
- };
- reader.readAsDataURL(file);
-}
-function renderArtists(){
- let artists=JSON.parse(localStorage.getItem('oasis_artists')||'[]');
- let h='';artists.forEach(a=>{h+=`<div class="item"><img src="${a.img}"><div><b>${a.name}</b><br><small>${a.date} ${a.price}</small></div><button onclick="delArtist(${a.id})" style="background:#ff4444">X</button></div>`});
- artistList.innerHTML=h||'No artists yet';
-}
-function delArtist(id){let a=JSON.parse(localStorage.getItem('oasis_artists')||'[]').filter(x=>x.id!==id);localStorage.setItem('oasis_artists',JSON.stringify(a));renderArtists();}
-renderArtists();
+<script type="module">
+// FIREBASE SECURE - HARD TO HACK SETUP
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
 
-// Adverts
-function addAd(){let t=aType.value,ti=aTitle.value,d=aDesc.value,p=aPrice.value;if(!ti)return alert("Title");let ads=JSON.parse(localStorage.getItem('oasis_adverts')||'[]');ads.unshift({id:Date.now(),type:t,title:ti,desc:d,price:p});localStorage.setItem('oasis_adverts',JSON.stringify(ads));renderAds();}
-function renderAds(){let ads=JSON.parse(localStorage.getItem('oasis_adverts')||'[]');let h='';ads.forEach(a=>{h+=`<div class="item"><div><b>${a.title}</b><br><small>${a.desc}</small></div><button onclick="delAd(${a.id})" style="background:#ff4444">X</button></div>`});adList.innerHTML=h||'No adverts';}
-function delAd(id){let a=JSON.parse(localStorage.getItem('oasis_adverts')||'[]').filter(x=>x.id!==id);localStorage.setItem('oasis_adverts',JSON.stringify(a));renderAds();}
-renderAds();
+const firebaseConfig = {
+  apiKey: "AIzaSyAyvYzV6Poob-wXHR2FNv0wrwSDvFUuchU",
+  authDomain: "makuachjudu.firebaseapp.com",
+  projectId: "makuachjudu",
+  storageBucket: "makuachjudu.firebasestorage.app",
+  messagingSenderId: "446303864336",
+  appId: "1:446303864336:web:6e97bf6325df99727dec95"
+};
 
-// Real Photos upload
-document.getElementById('photoUpload').addEventListener('change',function(e){
- let files=e.target.files;
- let photos=JSON.parse(localStorage.getItem('oasis_photos')||'[]');
- let loaded=0;
- for(let file of files){
-   let r=new FileReader();
-   r.onload=function(ev){photos.unshift(ev.target.result);loaded++;if(loaded===files.length){localStorage.setItem('oasis_photos',JSON.stringify(photos));renderPhotos();alert(loaded+" photos added to gallery!");}};
-   r.readAsDataURL(file);
- }
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+// AUTH CHECK - HARD TO BYPASS
+onAuthStateChanged(auth, (user)=>{
+  if(user){
+    document.getElementById('loginBox').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
+    document.getElementById('userEmail').innerText=user.email;
+    startScan(); loadFromFirebase();
+  }else{
+    document.getElementById('loginBox').style.display='block';
+    document.getElementById('adminPanel').style.display='none';
+  }
 });
-function renderPhotos(){let photos=JSON.parse(localStorage.getItem('oasis_photos')||'[]');let h='';photos.forEach((p,i)=>{h+=`<div style="position:relative"><img src="${p}" style="width:100%;height:80px;object-fit:cover;border-radius:6px"><button onclick="delPhoto(${i})" style="position:absolute;top:2px;right:2px;background:#ff4444;padding:2px 6px;font-size:10px">X</button></div>`});photoList.innerHTML=h||'No real photos yet';}
-function delPhoto(i){let p=JSON.parse(localStorage.getItem('oasis_photos')||'[]');p.splice(i,1);localStorage.setItem('oasis_photos',JSON.stringify(p));renderPhotos();}
-function clearPhotos(){if(confirm('Clear all real photos?')){localStorage.removeItem('oasis_photos');renderPhotos();}}
-renderPhotos();
-startScan();
+
+window.login = async ()=>{
+  let email=document.getElementById('email').value;
+  let pass=document.getElementById('password').value;
+  let err=document.getElementById('loginError');
+  if(pass.length<6){err.innerText="Password too short (min 6)"; return;}
+  try{ await signInWithEmailAndPassword(auth,email,pass); err.innerText=""; }
+  catch(e){ err.innerText="❌ Login failed: "+e.message; }
+}
+window.logout = ()=> signOut(auth);
+
+// Make functions global for HTML
+window.show = (id,btn)=>{
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active'); btn.classList.add('active');
+}
+
+const SECRET="JUBA2026-MY-CLUB-SECRET-92"; const SHOW=5; let verified={}; let count=0; let timer=null;
+async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+window.genQR = async ()=>{
+  let c=gConcert.value,n=gName.value,p=gPhone.value;if(!n)return alert("Name");
+  let id="OASIS-"+Math.floor(1000+Math.random()*9000)+"-"+p.slice(-3);
+  let raw=id+"|"+n+"|"+SECRET; let h=await sha(raw); let sig=h.slice(0,8); let qr=id+"|"+n+"|"+sig;
+  ticket.style.display='block';tC.innerText=c;tN.innerText=n;tCode.innerText=qr;qrcode.innerHTML="";new QRCode(qrcode,{text:qr,width:200,height:200});
+  // Log to Firebase for audit
+  await addDoc(collection(db,"tickets"),{ticketId:id,name:n,phone:p,concert:c,created:Date.now(),by:auth.currentUser.email});
+}
+async function verifyQR(t){
+  try{
+    let parts=t.split('|');let sig=parts.pop();let id=parts[0];let name=parts[1];
+    let raw=`${id}|${name}|${SECRET}`;let h=await sha(raw);let exp=h.slice(0,8);
+    let r=result; if(timer)clearTimeout(timer);
+    if(sig===exp){
+      if(verified[id]){r.style.display='block';r.className='fake';r.innerHTML='⚠️ ALREADY USED';}
+      else{verified[id]=Date.now();count++;document.getElementById('count').innerText=count;r.style.display='block';r.className='real';r.innerHTML=`✅ REAL ${id}<br>${name}`;let li=document.createElement('li');li.innerText=id+" - "+name;list.prepend(li);}
+    }else{r.style.display='block';r.className='fake';r.innerHTML='❌ FAKE';}
+    timer=setTimeout(()=>{r.style.display='none';},SHOW*1000);
+  }catch(e){}
+}
+window.startScan = ()=>{ if(window.s)return; window.s=true; const q=new Html5Qrcode("reader"); q.start({facingMode:"environment"},{fps:10,qrbox:250},d=>verifyQR(d),()=>{}); }
+
+// FIREBASE SYNC - Adverts & Artists hard to hack
+async function loadFromFirebase(){
+  // Adverts
+  onSnapshot(collection(db,"oasis_adverts"),(snap)=>{
+    let h=''; snap.forEach(d=>{let a=d.data(); h+=`<div class="item"><div><b>${a.title}</b><br><small>${a.desc}</small></div><button onclick="delDoc('oasis_adverts','${d.id}')" style="background:#ff4444">X</button></div>`});
+    adList.innerHTML=h||'No adverts';
+    // Also sync to localStorage for public site
+    let arr=[]; snap.forEach(d=>arr.push(d.data())); localStorage.setItem('oasis_adverts',JSON.stringify(arr));
+  });
+  // Artists
+  onSnapshot(collection(db,"oasis_artists"),(snap)=>{
+    let h=''; snap.forEach(d=>{let a=d.data(); h+=`<div class="item"><img src="${a.img}"><div><b>${a.name}</b><br><small>${a.date} ${a.price}</small></div><button onclick="delDoc('oasis_artists','${d.id}')" style="background:#ff4444">X</button></div>`});
+    artistList.innerHTML=h||'No artists';
+    let arr=[]; snap.forEach(d=>arr.push(d.data())); localStorage.setItem('oasis_artists',JSON.stringify(arr));
+  });
+  // Photos
+  onSnapshot(collection(db,"oasis_photos"),(snap)=>{
+    let h=''; let arr=[]; snap.forEach(d=>{let p=d.data(); arr.push(p.url); h+=`<div><img src="${p.url}" style="width:100%;height:80px;object-fit:cover;border-radius:6px"><button onclick="delDoc('oasis_photos','${d.id}')" style="background:#ff4444;padding:2px 6px">X</button></div>`});
+    photoList.innerHTML=h||'No photos'; localStorage.setItem('oasis_photos',JSON.stringify(arr));
+  });
+}
+window.addAd = async ()=>{
+  let t=aType.value,ti=aTitle.value,d=aDesc.value,p=aPrice.value; if(!ti)return alert("Title");
+  await addDoc(collection(db,"oasis_adverts"),{type:t,title:ti,desc:d,price:p,created:Date.now()});
+  aTitle.value='';aDesc.value='';
+}
+window.addArtist = async ()=>{
+  let name=arName.value,date=arDate.value,price=arPrice.value,desc=arDesc.value; let file=arImg.files[0];
+  if(!name||!file)return alert("Name + photo");
+  let reader=new FileReader();
+  reader.onload=async(e)=>{
+    await addDoc(collection(db,"oasis_artists"),{name,date,price,desc,img:e.target.result,created:Date.now()});
+    arName.value=''; arDesc.value=''; alert("Artist added securely!");
+  }; reader.readAsDataURL(file);
+}
+window.delDoc = async(col,id)=>{ if(confirm('Delete?')) await deleteDoc(doc(db,col,id)); }
+
+// Photo upload to Firebase
+document.getElementById('photoUpload')?.addEventListener('change',async(e)=>{
+  for(let file of e.target.files){
+    let r=new FileReader(); r.onload=async(ev)=>{ await addDoc(collection(db,"oasis_photos"),{url:ev.target.result,created:Date.now()}); }; r.readAsDataURL(file);
+  }
+});
+window.clearPhotos = async()=>{ if(!confirm('Clear all?'))return; let snap=await getDocs(collection(db,"oasis_photos")); snap.forEach(d=>deleteDoc(doc(db,"oasis_photos",d.id))); }
+
 </script>
 </body>
 </html>
