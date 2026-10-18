@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Oasis Dynasty Club [SECURE]</title>
+<title>Oasis Dynasty Club</title>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <style>
@@ -42,15 +42,15 @@ button{padding:11px 18px;border-radius:20px;border:none;background:#ff0055;color
 </div>
 
 <div style="padding:0 12px">
-<button class="tab active" onclick="show('gen',this)">QR Gen</button>
-<button class="tab" onclick="show('verify',this)">Verifier 5s</button>
+<button class="tab active" onclick="show('gen',this)">QR code Gen</button>
+<button class="tab" onclick="show('verify',this)">Verifier</button>
 <button class="tab" onclick="show('artist',this)">Big Artists</button>
 <button class="tab" onclick="show('ads',this)">Adverts</button>
-<button class="tab" onclick="show('photos',this)">Real Photos</button>
+<button class="tab" onclick="show('photos',this)">Club vibes Photos</button>
 </div>
 
 <div id="gen" class="panel active">
-<h3>QR Generator (Secure)</h3>
+<h3>QR code Generator</h3>
 <input id="gConcert" value="Oasis Dynasty Entry"><input id="gName" placeholder="Buyer Name"><input id="gPhone" placeholder="Phone"><button onclick="genQR()">Generate Secure QR</button>
 <div id="ticket" style="background:white;color:black;width:320px;margin:12px auto;padding:12px;border-radius:10px;display:none;text-align:center"><h4 id="tC" style="color:#ff0055"></h4><div id="qrcode"></div><p id="tN"></p><div id="tCode" style="background:#eee;padding:5px;font-size:11px;word-break:break-all"></div></div>
 </div>
@@ -114,7 +114,7 @@ window.show = (id,btn)=>{
   document.getElementById(id).classList.add('active'); btn.classList.add('active');
 }
 
-const SECRET="JUBA2026-MY-CLUB-SECRET-92"; const SHOW=5; let verified={}; let count=0; let timer=null;
+const SECRET="#Oasisdynasty@2026"; const SHOW=5; let verified={}; let count=0; let timer=null;
 async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
 window.genQR = async ()=>{
   let c=gConcert.value,n=gName.value,p=gPhone.value;if(!n)return alert("Name");
